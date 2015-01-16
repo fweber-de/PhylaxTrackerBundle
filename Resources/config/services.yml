@@ -1,0 +1,5 @@
+services:
+    ligneus_exception_tracker.exception_listener:
+        class: Ligneus\ExceptionTrackerBundle\EventListener\ExceptionListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
