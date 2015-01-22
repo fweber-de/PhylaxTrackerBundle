@@ -3,17 +3,32 @@
 namespace Ligneus\ExceptionTrackerBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\Debug\ExceptionHandler;
 
+/**
+ * @author Florian Weber <fweber@ligneus.de>
+ */
 class ExceptionListener
 {
-    private $prevExceptionHandler;
+    /**
+     * @var string
+     */
+    private $trackerEndpoint;
 
-    public function __construct()
+    /**
+     * @var string
+     */
+    private $appKey;
+
+    /**
+     * @var string
+     */
+    private $environment;
+
+    public function __construct($trackerEndpoint, $appKey, $environment)
     {
-        // Set our handle method as fatal exception handler.
-        // It is required to extend Symfony\Component\Debug\ExceptionHandler
-        $this->prevExceptionHandler = set_exception_handler(array($this, 'handle'));
+        $this->trackerEndpoint = $trackerEndpoint;
+        $this->appKey = $appKey;
+        $this->environment = $environment;
     }
 
     public function onKernelException(GetResponseForExceptionEvent $event)
@@ -22,28 +37,38 @@ class ExceptionListener
         $exception = $event->getException();
 
         $this->logException($exception);
-    }
 
-    public function handle(\Exception $exception)
-    {
-        // Call our custom handler.
-        $this->onFatalErrorException($exception);
-
-        // Call exception handler that was overridden.
-        // Or try to call parent::handle($exception)
-        if (is_array($this->prevExceptionHandler) && $this->prevExceptionHandler[0] instanceof ExceptionHandler) {
-            $this->prevExceptionHandler[0]->handle($exception);
-        }
-    }
-
-    public function onFatalErrorException(\Exception $exception)
-    {
-        $this->logException($exception);
+        return;
     }
 
     protected function logException($exception)
     {
-        dump($exception);
+        $data['status'] = (method_exists($exception, 'getStatusCode')) ? $exception->getStatusCode() : 500;
+        $data['title'] = '';
+        $data['text'] = '';
+        $data['appkey'] = $this->appKey;
+        $data['message'] = $exception->getMessage();
+        $data['class'] = get_class($exception);
+        $data['trace'] = '';
+
+        $this->postJson(json_encode($data));
     }
 
+    /**
+     * @param  string $json
+     * @return string
+     */
+    protected function postJson($json)
+    {
+        $ch = curl_init($this->trackerEndpoint);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: '.strlen($json), )
+        );
+
+        return curl_exec($ch);
+    }
 }
