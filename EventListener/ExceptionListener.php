@@ -33,6 +33,10 @@ class ExceptionListener
 
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
+        if ($this->environment != 'prod') {
+            return;
+        }
+
         // You get the exception object from the received event
         $exception = $event->getException();
 
