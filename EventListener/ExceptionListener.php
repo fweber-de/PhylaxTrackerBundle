@@ -37,15 +37,12 @@ class ExceptionListener
             return;
         }
 
-        // You get the exception object from the received event
-        $exception = $event->getException();
-
-        $this->logException($exception);
+        $this->logException($event->getException(), $event->getRequest());
 
         return;
     }
 
-    protected function logException($exception)
+    protected function logException($exception, $request)
     {
         $data['status'] = (method_exists($exception, 'getStatusCode')) ? $exception->getStatusCode() : 500;
         $data['title'] = '';
@@ -54,6 +51,7 @@ class ExceptionListener
         $data['message'] = $exception->getMessage();
         $data['class'] = get_class($exception);
         $data['trace'] = '';
+        $data['uri'] = $request->getRequestUri();
 
         $this->postJson(json_encode($data));
     }
