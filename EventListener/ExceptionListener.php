@@ -50,7 +50,6 @@ class ExceptionListener
     protected function logException($exception, $request)
     {
         $data['status'] = (method_exists($exception, 'getStatusCode')) ? $exception->getStatusCode() : 500;
-        $data['trace'] = (method_exists($exception, 'getTraceAsString')) ? $exception->getTraceAsString() : '';
 
         $data['appkey'] = $this->appKey;
         $data['message'] = $exception->getMessage();
@@ -60,6 +59,7 @@ class ExceptionListener
 
         $data['title'] = '';
         $data['text'] = '';
+        $data['trace'] = '';
 
         $this->postJson(json_encode($data));
     }
