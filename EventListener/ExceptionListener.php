@@ -3,6 +3,7 @@
 namespace Ligneus\ExceptionTrackerBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Florian Weber <fweber@ligneus.de>
@@ -42,16 +43,23 @@ class ExceptionListener
         return;
     }
 
+    /**
+     * @param $exception
+     * @param Request $request
+     */
     protected function logException($exception, $request)
     {
         $data['status'] = (method_exists($exception, 'getStatusCode')) ? $exception->getStatusCode() : 500;
-        $data['title'] = '';
-        $data['text'] = '';
+        $data['trace'] = (method_exists($exception, 'getTraceAsString')) ? $exception->getTraceAsString() : '';
+
         $data['appkey'] = $this->appKey;
         $data['message'] = $exception->getMessage();
         $data['class'] = get_class($exception);
-        $data['trace'] = '';
         $data['uri'] = $request->getRequestUri();
+        $data['ip'] = $request->getClientIp();
+
+        $data['title'] = '';
+        $data['text'] = '';
 
         $this->postJson(json_encode($data));
     }
