@@ -34,7 +34,7 @@ class ExceptionListener
 
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        if ($this->environment != 'prod') {
+        if ($this->environment != 'prod' || is_null($this->trackerEndpoint)) {
             return;
         }
 
