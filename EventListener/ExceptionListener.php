@@ -34,7 +34,7 @@ class ExceptionListener
 
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        if ($this->environment != 'prod' || is_null($this->trackerEndpoint)) {
+        if ($this->environment != 'prod' && is_null($this->trackerEndpoint)) {
             return;
         }
 
@@ -47,7 +47,7 @@ class ExceptionListener
      * @param $exception
      * @param Request $request
      */
-    protected function logException($exception, $request)
+    protected function logException(\Exception $exception, $request)
     {
         $data['status'] = (method_exists($exception, 'getStatusCode')) ? $exception->getStatusCode() : 500;
 
@@ -56,10 +56,10 @@ class ExceptionListener
         $data['class'] = get_class($exception);
         $data['uri'] = $request->getRequestUri();
         $data['ip'] = $request->getClientIp();
+        $data['trace'] = $exception->getTraceAsString();
 
         $data['title'] = '';
         $data['text'] = '';
-        $data['trace'] = '';
 
         $this->postJson(json_encode($data));
     }
