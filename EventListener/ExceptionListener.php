@@ -65,7 +65,8 @@ class ExceptionListener
     }
 
     /**
-     * @param  string $json
+     * @param string $json
+     *
      * @return string
      */
     protected function postJson($json)
