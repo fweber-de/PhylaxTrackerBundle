@@ -4,6 +4,7 @@ namespace Ligneus\ExceptionTrackerBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpFoundation\Request;
+use Ligneus\ExceptionTrackerBundle\Exception\ExplanatoryException;
 
 /**
  * @author Florian Weber <fweber@ligneus.de>
@@ -57,6 +58,12 @@ class ExceptionListener
         $data['uri'] = $request->getRequestUri();
         $data['ip'] = $request->getClientIp();
         $data['trace'] = $exception->getTraceAsString();
+
+        if($exception instanceof ExplanatoryException) {
+            $msg = $exception->getExtendedMessage();
+            $data['extended_msg'] = ($msg == null) ? '' : $msg;
+            $data['extended_type'] = $exception->getExtendedType();
+        }
 
         $data['title'] = '';
         $data['text'] = '';
