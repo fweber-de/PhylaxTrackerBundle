@@ -59,12 +59,6 @@ class ExceptionListener
         $data['ip'] = $request->getClientIp();
         $data['trace'] = $exception->getTraceAsString();
 
-        if($exception instanceof ExplanatoryException) {
-            $msg = $exception->getExtendedMessage();
-            $data['extended_msg'] = ($msg == null) ? '' : $msg;
-            $data['extended_type'] = $exception->getExtendedType();
-        }
-
         $data['title'] = '';
         $data['text'] = '';
 
