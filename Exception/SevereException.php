@@ -3,7 +3,7 @@
 namespace Phylax\PhylaxTrackerBundle\Exception;
 
 /**
- * @author Florian Weber <fweber@ligneus.de>
+ * @author Florian Weber <florian.weber@fweber.info>
  */
 class SevereException extends \Exception
 {
