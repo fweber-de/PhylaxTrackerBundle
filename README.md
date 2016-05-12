@@ -1,47 +1,34 @@
-Ligneus\ExceptionTrackerBundle
+Phylax\PhylaxTrackerBundle
 ==============================
 
-Übermittelt die Fehlerinfo an den Exception Server im Fehlerfall
+Sends Error/Exception Information to a Phylax Server
 
 ## Installation
 
-### Parameter
+### Parameters
 
-In der Datei `app/config/parameters.yml.dist` müssen folgende Parameter eingetragen werden (Beispielwerte!):
+You have to provide following parameters in the file `app/config/parameters.yml.dist`:
 
 ```yml
-#exception tracker
-ligneus.exception.tracker_endpoint: {serverUrl}
-ligneus.exception.app_key: {appKey}
+#phylax tracker
+phylax.exception.tracker_endpoint: {serverUrl}
+phylax.exception.app_key: {appKey}
 ```
 
-### Bundle registrierung
+### Register Bundle
 
-Das Bundle muss in der Datei `app/AppKernel.php` registriert werden
+Register the Bundle in the file `app/AppKernel.php`
 
 ```php
 public function registerBundles()
 {
     $bundles = array(
         // ...
-        new Ligneus\ExceptionTrackerBundle\LigneusExceptionTrackerBundle(),
+        new Phylax\PhylaxTrackerBundle\PhylaxPhylaxTrackerBundle(),
     );
 }
 ```
 
 ### Composer
 
-Um das Bundle laden zu können muss die Datei `composer.json` wie folgt angepasst werden:
-
-```json
-"repositories": [
-    {
-        "type": "composer",
-        "url": "http://erpag:erpag2013@toran.erpag.info/repo/private/"
-    }
-],
-
-"require": {
-    "ligneus/exception-tracker-bundle": "1.*"
-}
-```
+    composer require phylax/phylax-tracker-bundle

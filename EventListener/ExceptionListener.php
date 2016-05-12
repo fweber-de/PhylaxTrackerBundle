@@ -1,6 +1,6 @@
 <?php
 
-namespace Ligneus\ExceptionTrackerBundle\EventListener;
+namespace Phylax\PhylaxTrackerBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpFoundation\Request;

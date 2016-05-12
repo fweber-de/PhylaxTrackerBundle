@@ -1,9 +1,9 @@
 services:
-    ligneus_exception_tracker.exception_listener:
-        class: Ligneus\ExceptionTrackerBundle\EventListener\ExceptionListener
+    phylax_exception_tracker.exception_listener:
+        class: Phylax\PhylaxTrackerBundle\EventListener\ExceptionListener
         arguments:
-            - %ligneus.exception.tracker_endpoint%
-            - %ligneus.exception.app_key%
+            - %phylax.exception.tracker_endpoint%
+            - %phylax.exception.app_key%
             - %kernel.environment%
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

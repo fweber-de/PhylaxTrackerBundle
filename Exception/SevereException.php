@@ -1,6 +1,6 @@
 <?php
 
-namespace Ligneus\ExceptionTrackerBundle\Exception;
+namespace Phylax\PhylaxTrackerBundle\Exception;
 
 /**
  * @author Florian Weber <fweber@ligneus.de>

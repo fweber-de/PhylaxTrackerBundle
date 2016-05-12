@@ -1,9 +1,9 @@
 <?php
 
-namespace Ligneus\ExceptionTrackerBundle;
+namespace Phylax\PhylaxTrackerBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class LigneusExceptionTrackerBundle extends Bundle
+class PhylaxPhylaxTrackerBundle extends Bundle
 {
 }
