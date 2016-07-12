@@ -1,5 +1,6 @@
 {
     "name": "phylax/phylax-tracker-bundle",
+    "license": "MIT",
     "authors": [
         {
             "name": "Weber, Florian",
