@@ -47,7 +47,7 @@ class ExceptionListener
      * @param $exception
      * @param Request $request
      */
-    protected function logException(\Exception $exception, $request)
+    protected function logException(\Exception $exception, Request $request)
     {
         $data['status'] = (method_exists($exception, 'getStatusCode')) ? $exception->getStatusCode() : 500;
 
@@ -83,7 +83,7 @@ class ExceptionListener
         return curl_exec($ch);
     }
 
-    protected function getExceptionTraceAsString($exception)
+    protected function getExceptionTraceAsString(\Exception $exception)
     {
         $rtn = "";
         $count = 0;
