@@ -12,7 +12,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Phylax\\PhylaxTrackerBundle": ""
+            "Phylax\\PhylaxTrackerBundle\\": ""
         }
     },
     "target-dir": "Phylax/PhylaxTrackerBundle"
