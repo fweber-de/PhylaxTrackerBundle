@@ -14,6 +14,5 @@
         "psr-4": {
             "Phylax\\PhylaxTrackerBundle\\": ""
         }
-    },
-    "target-dir": "Phylax/PhylaxTrackerBundle"
+    }
 }
